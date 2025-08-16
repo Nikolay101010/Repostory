@@ -1,30 +1,34 @@
-name: Task 2
+name: Task 2 - .NET API Tests CI
 
 on:
-  push:
-    branches: [ "main" ]
+  push:
+    branches:
+      - main
 
 jobs:
-  build-test:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-latest
 
-    env:
-      TEST_USER_EMAIL:     "test@example.com"
-      TEST_USER_PASSWORD:  "password"
-      BASE_URL:            "http://localhost:5000"
+    env:
+      TEST_USER_EMAIL: "test@example.com"
+      TEST_USER_PASSWORD: "password"
+      BASE_URL: "http://localhost:5000"
 
-    steps:
-    - uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.x
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore Foody/Story/Story.csproj
 
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+      - name: Build project
+        run: dotnet build Foody/Story/Story.csproj --configuration Release --no-restore
 
-    - name: Test
-      run: dotnet test --configuration Release --no-build
+      - name: Run tests
+        run: dotnet test Foody/Story/Story.csproj --configuration Release --no-build
+
