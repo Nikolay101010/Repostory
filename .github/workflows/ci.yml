@@ -24,11 +24,15 @@ jobs:
           dotnet-version: 8.x
 
       - name: Restore dependencies
-        run: dotnet restore Foody/Story/Story.csproj
+  run: dotnet restore
+  working-directory: Story
 
-      - name: Build project
-        run: dotnet build Foody/Story/Story.csproj --configuration Release --no-restore
+       - name: Build project
+  run: dotnet build --configuration Release --no-restore
+  working-directory: Story
 
-      - name: Run tests
-        run: dotnet test Foody/Story/Story.csproj --configuration Release --no-build
+- name: Run tests
+  run: dotnet test --configuration Release --no-build
+  working-directory: Story
+
 
